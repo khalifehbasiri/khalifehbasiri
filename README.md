@@ -20,7 +20,7 @@ This is where I try ideas, follow rabbit holes, and turn what I learn into usefu
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="assets/stats-dark.svg">
     <source media="(prefers-color-scheme: light)" srcset="assets/stats-light.svg">
-    <img alt="GitHub activity summary: contributions, active days, longest streak, and public repositories." src="assets/stats-dark.svg" width="420">
+    <img alt="GitHub activity summary: contributions and longest streak over the last year, lifetime public commits, and public repositories." src="assets/stats-dark.svg" width="420">
   </picture>
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="assets/languages-dark.svg">
@@ -35,7 +35,7 @@ This is where I try ideas, follow rabbit holes, and turn what I learn into usefu
   <img alt="An animated snake eating the squares of my GitHub contribution calendar." src="assets/snake-dark.svg" width="100%">
 </picture>
 
-<sub>Activity over the last year · language mix by code bytes · refreshed daily</sub>
+<sub>Contributions and streak over the last year · lifetime public commits · language mix by code bytes · refreshed daily</sub>
 
 ## A few tabs I always have open
 

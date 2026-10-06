@@ -8,6 +8,7 @@ import json
 import os
 from pathlib import Path
 import subprocess
+from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -46,6 +47,13 @@ def fetch(username, token):
     for day in days:
         streak = streak + 1 if day['contributionCount'] else 0
         longest = max(longest, streak)
+    # Public scope keeps local and repository-scoped workflow credentials consistent.
+    # Commit search covers indexed default-branch commits without a date restriction.
+    commits = api('search/commits?' + urlencode({
+        'q': f'author:{username} is:public', 'per_page': 1,
+    }), token)
+    if commits['incomplete_results']:
+        raise RuntimeError('GitHub commit search was incomplete; keeping the previous cards.')
     languages = Counter()
     with ThreadPoolExecutor(max_workers=4) as pool:
         for counts in pool.map(lambda r: api(f'repos/{r["full_name"]}/languages', token), repos):
@@ -53,7 +61,7 @@ def fetch(username, token):
     return {
         'updated': datetime.now(timezone.utc).strftime('%Y-%m-%d'),
         'contributions': calendar['totalContributions'],
-        'active_days': sum(d['contributionCount'] > 0 for d in days),
+        'lifetime_commits': commits['total_count'],
         'longest_streak': longest, 'public_repos': len(repos),
         'languages': dict(languages.most_common()),
     }
@@ -68,9 +76,9 @@ def text(x, y, content, t, size=14, muted=False, weight=400):
     return f'<text x="{x}" y="{y}" font-size="{size}" font-weight="{weight}" fill="{t["muted" if muted else "ink"]}">{escape(str(content))}</text>'
 
 def stats_svg(data, t):
-    s = svg_start('GitHub activity over the last year', t)
-    s += text(28, 36, 'ACTIVITY / LAST YEAR', t, 12, True, 600)
-    metrics = [(28, 96, data['contributions'], 'contributions'), (302, 96, data['active_days'], 'active days'),
+    s = svg_start('GitHub activity: yearly contributions and streak, lifetime public commits, and public repositories', t)
+    s += text(28, 36, 'GITHUB / ACTIVITY', t, 12, True, 600)
+    metrics = [(28, 96, data['contributions'], 'contributions · last year'), (302, 96, data['lifetime_commits'], 'lifetime commits · public'),
                (28, 179, data['longest_streak'], 'longest streak · days'), (302, 179, data['public_repos'], 'public repos · non-forks')]
     for x, y, value, label in metrics:
         s += text(x, y, f'{value:,}', t, 38, weight=700)
