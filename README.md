@@ -25,7 +25,7 @@ This is where I try ideas, follow rabbit holes, and turn what I learn into usefu
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="assets/languages-dark.svg">
     <source media="(prefers-color-scheme: light)" srcset="assets/languages-light.svg">
-    <img alt="Language mix across my public, non-fork repositories, measured by code bytes." src="assets/languages-dark.svg" width="420">
+    <img alt="Language mix across my public and private, non-fork repositories, measured by code bytes." src="assets/languages-dark.svg" width="420">
   </picture>
 </p>
 
@@ -35,7 +35,7 @@ This is where I try ideas, follow rabbit holes, and turn what I learn into usefu
   <img alt="An animated snake eating the squares of my GitHub contribution calendar." src="assets/snake-dark.svg" width="100%">
 </picture>
 
-<sub>Activity over the last year · language mix by code bytes · refreshed daily</sub>
+<sub>Activity over the last year · public and private language mix by code bytes</sub>
 
 ## A few tabs I always have open
 

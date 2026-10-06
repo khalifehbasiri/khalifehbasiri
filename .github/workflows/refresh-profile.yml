@@ -23,10 +23,19 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v6
-      - name: Generate activity and language cards
+      - name: Generate activity cards
         env:
           GH_TOKEN: ${{ github.token }}
-        run: python3 scripts/update_stats.py
+        run: python3 scripts/update_stats.py --activity-only
+      - name: Refresh language mix across public and private repositories
+        env:
+          PROFILE_STATS_TOKEN: ${{ secrets.PROFILE_STATS_TOKEN }}
+        run: |
+          if [ -n "$PROFILE_STATS_TOKEN" ]; then
+            GH_TOKEN="$PROFILE_STATS_TOKEN" python3 scripts/update_stats.py --include-private --languages-only
+          else
+            echo 'Private language refresh needs PROFILE_STATS_TOKEN. Keeping the last successful language cards.' >> "$GITHUB_STEP_SUMMARY"
+          fi
       - name: Generate contribution snake
         uses: Platane/snk/svg-only@d8f6715049803e982ee5ff501b6b9b7d5deeb09b
         with:
