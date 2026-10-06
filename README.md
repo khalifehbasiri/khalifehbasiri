@@ -1,7 +1,7 @@
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="assets/banner-dark.svg">
   <source media="(prefers-color-scheme: light)" srcset="assets/banner-light.svg">
-  <img alt="Khalifeh Basiri — build, break, understand, repeat." src="assets/banner-dark.svg" width="100%">
+  <img alt="Khalifeh Basiri: build, break, understand, repeat." src="assets/banner-dark.svg" width="100%">
 </picture>
 
 <p align="center">
@@ -12,9 +12,7 @@
 
 Most of my projects start with **“I wish there was a tool for this.”**
 
-This is where I try ideas, follow rabbit holes, and turn what I learn into useful software—from full-stack apps to AI experiments.
-
-I'm working toward becoming an **AI engineer** by turning existing models into useful applications, experimenting with LLMs, and learning through hands-on machine learning projects.
+This is where I try ideas, follow rabbit holes, and turn what I learn into useful software, from full-stack apps to AI tools, LLM experiments, and hands-on machine learning projects.
 
 ## The commit trail
 
@@ -48,7 +46,7 @@ I'm working toward becoming an **AI engineer** by turning existing models into u
     <picture>
       <source media="(prefers-color-scheme: dark)" srcset="assets/zdash-logo-dark.svg">
       <source media="(prefers-color-scheme: light)" srcset="assets/zdash-logo-light.svg">
-      <img alt="ZDash — visit the product website" src="assets/zdash-logo-dark.svg" width="144">
+      <img alt="ZDash: visit the product website" src="assets/zdash-logo-dark.svg" width="144">
     </picture>
   </a>
   &nbsp; <sub>Currently on the workbench. More experiments in the repos below.</sub>
