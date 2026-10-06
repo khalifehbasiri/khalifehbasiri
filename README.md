@@ -1,16 +1,50 @@
-## Hi there 👋
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/banner-dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="assets/banner-light.svg">
+  <img alt="Khalifeh Basiri — build, break, understand, repeat." src="assets/banner-dark.svg" width="100%">
+</picture>
 
-<!--
-**khalifehbasiri/khalifehbasiri** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+<p align="center">
+  <a href="https://kbasiri.com">the portfolio</a> &nbsp; / &nbsp;
+  <a href="https://www.linkedin.com/in/khalifeh-basiri/">the professional version</a> &nbsp; / &nbsp;
+  <a href="mailto:khalifa7k@gmail.com">say hello</a>
+</p>
 
-Here are some ideas to get you started:
+Most of my projects start with **“I wish there was a tool for this.”**
 
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
--->
+This is where I try things, follow the rabbit holes, and turn a few of them into something useful. Sometimes that means a web app. Sometimes it means talking to a car's ECU.
+
+## The commit trail
+
+<p>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/stats-dark.svg">
+    <source media="(prefers-color-scheme: light)" srcset="assets/stats-light.svg">
+    <img alt="GitHub activity summary: contributions, active days, longest streak, and public repositories." src="assets/stats-dark.svg" width="420">
+  </picture>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/languages-dark.svg">
+    <source media="(prefers-color-scheme: light)" srcset="assets/languages-light.svg">
+    <img alt="Language mix across my public, non-fork repositories, measured by code bytes." src="assets/languages-dark.svg" width="420">
+  </picture>
+</p>
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/snake-dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="assets/snake-light.svg">
+  <img alt="An animated snake eating the squares of my GitHub contribution calendar." src="assets/snake-dark.svg" width="100%">
+</picture>
+
+<sub>Activity over the last year · language mix by code bytes · refreshed daily</sub>
+
+## A few tabs I always have open
+
+`something I'm building` &nbsp; `something I'm debugging` &nbsp; `a car problem`
+
+Right now, the workbench has [ZDash](https://www.zdash.app/) on it. The other experiments live in the repos below.
+
+Away from the keyboard: cars, the gym, gaming, and a book I should probably finish.
+
+---
+
+<p align="center"><sub>Browse around. If something sparks an idea, <a href="mailto:khalifa7k@gmail.com">let's talk</a>.</sub></p>

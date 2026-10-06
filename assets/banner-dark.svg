@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="320" viewBox="0 0 1200 320" role="img" aria-labelledby="title desc">
+<title id="title">Khalifeh Basiri — build, break, understand, repeat.</title>
+<desc id="desc">An animated terminal cycling through building useful things, following rabbit holes, and debugging software and engines.</desc>
+<defs><clipPath id="typing"><rect class="typed" x="84" y="194" width="650" height="37"/></clipPath></defs>
+<style>
+@keyframes typing{0%{width:0}45%,80%{width:650px}100%{width:0}}
+@keyframes show{0%,32%{opacity:1}33%,100%{opacity:0}}
+@keyframes blink{0%,49%{opacity:1}50%,100%{opacity:0}}
+@keyframes flow{0%{stroke-dashoffset:60}100%{stroke-dashoffset:0}}
+.typed{animation:typing 5s steps(44,end) infinite}
+.phrase{opacity:0;animation:show 15s step-end infinite}
+.p2{animation-delay:-10s}.p3{animation-delay:-5s}
+.cursor{animation:blink 1s step-end infinite}
+.flow{animation:flow 4s linear infinite}
+@media(prefers-reduced-motion:reduce){.typed{animation:none;width:650px}.phrase{animation:none;opacity:0}.p1{opacity:1}.cursor,.flow{animation:none}}
+</style>
+<rect x="1" y="1" width="1198" height="318" rx="16" fill="#0d1117" stroke="#273441"/>
+<path d="M 1 47 H 1199" stroke="#273441"/>
+<g fill="#8e9cab"><circle cx="29" cy="25" r="5"/><circle cx="48" cy="25" r="5"/><circle cx="67" cy="25" r="5"/></g>
+<text x="91" y="30" font-family="Consolas,monospace" font-size="13" fill="#8e9cab">~/khalifeh/workbench</text>
+<circle cx="1159" cy="25" r="4" fill="#64dfca"/>
+<text x="48" y="99" font-family="Consolas,monospace" font-size="13" letter-spacing="2" fill="#64dfca">HELLO, WORLD.</text>
+<text x="45" y="173" font-family="Segoe UI,Arial,sans-serif" font-size="68" font-weight="700" letter-spacing="-2" fill="#f0f6fc">Khalifeh Basiri<tspan fill="#c69bff">_</tspan></text>
+<text x="48" y="221" font-family="Consolas,monospace" font-size="22" fill="#64dfca">&gt;</text>
+<g clip-path="url(#typing)" font-family="Consolas,monospace" font-size="20" fill="#8e9cab">
+<text x="84" y="220" class="phrase p1">building things I wish existed</text>
+<text x="84" y="220" class="phrase p2">one rabbit hole at a time</text>
+<text x="84" y="220" class="phrase p3">debugging software &amp; occasionally engines</text>
+</g>
+<text x="48" y="283" font-family="Consolas,monospace" font-size="13" fill="#8e9cab">build <tspan fill="#c69bff">→</tspan> break <tspan fill="#c69bff">→</tspan> understand <tspan fill="#c69bff">→</tspan> repeat</text>
+<g transform="translate(850 78)">
+<path d="M 0 23 V 176" stroke="#273441" stroke-width="2"/>
+<path class="flow" d="M 0 23 V 176" stroke="#64dfca" stroke-width="2" stroke-dasharray="8 52"/>
+<g font-family="Consolas,monospace" font-size="14">
+<rect x="-14" y="7" width="28" height="28" rx="8" fill="#141b25" stroke="#c69bff"/><text x="-5" y="26" fill="#c69bff">?</text><text x="34" y="26" fill="#8e9cab">what if...</text>
+<rect x="-14" y="77" width="28" height="28" rx="8" fill="#141b25" stroke="#64dfca"/><text x="-9" y="96" fill="#64dfca">/&gt;</text><text x="34" y="96" fill="#f0f6fc">make it work</text>
+<rect x="-14" y="147" width="28" height="28" rx="8" fill="#141b25" stroke="#c69bff"/><text x="-5" y="166" fill="#c69bff">↑</text><text x="34" y="166" fill="#8e9cab">put it out there</text>
+</g></g>
+</svg>

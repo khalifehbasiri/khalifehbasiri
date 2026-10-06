@@ -1,0 +1,47 @@
+name: Refresh profile visuals
+
+on:
+  schedule:
+    - cron: '23 10 * * *'
+  workflow_dispatch:
+  push:
+    paths:
+      - scripts/update_stats.py
+      - .github/workflows/refresh-profile.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: refresh-profile
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    if: github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v6
+      - name: Generate activity and language cards
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 scripts/update_stats.py
+      - name: Generate contribution snake
+        uses: Platane/snk/svg-only@d8f6715049803e982ee5ff501b6b9b7d5deeb09b
+        with:
+          github_user_name: khalifehbasiri
+          outputs: |
+            assets/snake-dark.svg?palette=github-dark&color_snake=#64dfca&color_dots=#161b22,#15453e,#227b6c,#37ad97,#64dfca
+            assets/snake-light.svg?palette=github-light&color_snake=#087f72&color_dots=#edf2f5,#c7ece4,#83d6c4,#38af96,#087f72
+      - name: Commit changed visuals
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add assets/stats-*.svg assets/languages-*.svg assets/snake-*.svg
+          if git diff --cached --quiet; then
+            echo 'Visuals are already current.'
+          else
+            git commit -m 'Refresh profile visuals'
+            git push
+          fi
