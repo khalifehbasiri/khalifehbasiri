@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="180" viewBox="0 0 1000 180" role="img" aria-labelledby="title desc">
+<title id="title">Off the clock</title>
+<desc id="desc">A sports coupe drives from left to right with spinning wheels. On the next pass, a weight plate rolls across the same lane. The sequence repeats.</desc>
+<defs><clipPath id="lane"><rect x="1" y="48" width="998" height="110"/></clipPath></defs>
+<style>
+@keyframes drive{0%{transform:translateX(-240px);opacity:0}2%{opacity:1}45%{transform:translateX(1050px);opacity:1}48%,100%{transform:translateX(1050px);opacity:0}}
+@keyframes roll{0%,49.99%{transform:translateX(-90px);opacity:0}50%{transform:translateX(-90px);opacity:0}52%{opacity:1}95%{transform:translateX(1050px);opacity:1}98%,100%{transform:translateX(1050px);opacity:0}}
+@keyframes spin{to{transform:rotate(360deg)}}
+.car{animation:drive 20s linear infinite;transform:translateX(-240px);opacity:0}
+.plate{animation:roll 20s linear infinite;transform:translateX(-90px);opacity:0}
+.wheel{animation:spin .65s linear infinite;transform-origin:0 0}
+.plate-spin{animation:spin 1.4s linear infinite;transform-origin:0 0}
+@media(prefers-reduced-motion:reduce){.car{animation:none;transform:translateX(320px);opacity:1}.plate{animation:none;transform:translateX(620px);opacity:1}.wheel,.plate-spin{animation:none}}
+</style>
+<rect x="1" y="1" width="998" height="178" rx="14" fill="#ffffff" stroke="#d2dce3"/>
+<text x="24" y="31" fill="#586b7a" font-family="Consolas,monospace" font-size="12" letter-spacing="2">OFF THE CLOCK</text>
+<path d="M24 141 H976" stroke="#d2dce3" stroke-width="2"/>
+<path d="M24 160 H976" stroke="#d2dce3" stroke-width="1.5" stroke-dasharray="24 24"/>
+<g clip-path="url(#lane)">
+  <g class="car">
+    <ellipse cx="110" cy="137" rx="105" ry="4" fill="#d2dce3" opacity=".45"/>
+    <path d="M10 112 L18 96 L55 90 L78 67 Q82 62 91 62 H134 Q144 62 151 69 L173 90 L207 98 Q216 101 216 111 V123 H10Z" fill="#087f72"/>
+    <path d="M64 90 L85 69 H111 V90Z M116 69 H133 Q139 69 144 75 L160 90 H116Z" fill="#d8ecec" stroke="#ffffff" stroke-width="1.5"/>
+    <path d="M18 101 H201 M110 94 V114 M121 97 H130" fill="none" stroke="#ffffff" stroke-opacity=".45" stroke-width="1.5"/>
+    <path d="M11 117 H215" stroke="#172b3a" stroke-opacity=".35" stroke-width="3"/>
+    <rect x="198" y="100" width="14" height="5" rx="2" fill="#172b3a"/>
+    <rect x="16" y="99" width="6" height="7" rx="2" fill="#7950b3"/>
+    <path d="M17 94 H43" stroke="#087f72" stroke-width="4"/>
+    <g transform="translate(52 124)"><circle r="15" fill="#ffffff" stroke="#172b3a" stroke-width="2.5"/>
+    <g class="wheel"><circle r="10" fill="#d2dce3"/><path d="M0-10V10 M-10 0H10 M-7-7L7 7 M-7 7L7-7" stroke="#586b7a" stroke-width="2"/><circle r="3" fill="#172b3a"/></g></g>
+    <g transform="translate(172 124)"><circle r="15" fill="#ffffff" stroke="#172b3a" stroke-width="2.5"/>
+    <g class="wheel"><circle r="10" fill="#d2dce3"/><path d="M0-10V10 M-10 0H10 M-7-7L7 7 M-7 7L7-7" stroke="#586b7a" stroke-width="2"/><circle r="3" fill="#172b3a"/></g></g>
+  </g>
+  <g class="plate">
+    <ellipse cx="38" cy="139" rx="32" ry="4" fill="#d2dce3" opacity=".45"/>
+    <g transform="translate(38 110)">
+      <g class="plate-spin">
+        <circle r="30" fill="#7950b3" stroke="#172b3a" stroke-width="1.5"/>
+        <circle r="25" fill="none" stroke="#ffffff" stroke-opacity=".35" stroke-width="1.5"/>
+        <g fill="#ffffff" stroke="#172b3a" stroke-opacity=".3" stroke-width="1">
+          <rect x="-10" y="-23" width="20" height="6" rx="3"/>
+          <rect x="-10" y="17" width="20" height="6" rx="3"/>
+        </g>
+        <circle r="8" fill="#172b3a"/>
+        <circle r="4.5" fill="#ffffff"/>
+        <g fill="#ffffff" font-family="Segoe UI,Arial,sans-serif" font-size="8" font-weight="700" text-anchor="middle">
+          <text x="-18" y="3">45</text><text x="18" y="3">LB</text>
+        </g>
+      </g>
+    </g>
+  </g>
+</g>
+</svg>

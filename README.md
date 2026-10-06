@@ -12,7 +12,9 @@
 
 Most of my projects start with **“I wish there was a tool for this.”**
 
-This is where I try things, follow the rabbit holes, and turn a few of them into something useful. Sometimes that means a web app. Sometimes it means talking to a car's ECU.
+This is where I try things, follow the rabbit holes, and turn a few of them into something useful—from full-stack apps to experiments with machine learning.
+
+I'm building toward **AI engineering**, with an interest in computer vision, retrieval, and making AI useful beyond a demo.
 
 ## The commit trail
 
@@ -39,11 +41,15 @@ This is where I try things, follow the rabbit holes, and turn a few of them into
 
 ## A few tabs I always have open
 
-`something I'm building` &nbsp; `something I'm debugging` &nbsp; `a car problem`
+`something I'm building` &nbsp; `something I'm debugging` &nbsp; `an AI experiment`
 
 Right now, the workbench has [ZDash](https://www.zdash.app/) on it. The other experiments live in the repos below.
 
-Away from the keyboard: cars, the gym, gaming, and a book I should probably finish.
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/offline-dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="assets/offline-light.svg">
+  <img alt="Off the clock: a car drives across the screen, followed by a rolling weight plate." src="assets/offline-dark.svg" width="100%">
+</picture>
 
 ---
 

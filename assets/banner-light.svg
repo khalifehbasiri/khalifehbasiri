@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="320" viewBox="0 0 1200 320" role="img" aria-labelledby="title desc">
 <title id="title">Khalifeh Basiri — build, break, understand, repeat.</title>
-<desc id="desc">An animated terminal cycling through building useful things, following rabbit holes, and debugging software and engines.</desc>
+<desc id="desc">An animated terminal cycling through building useful things, exploring AI, and learning to build smarter systems.</desc>
 <defs><clipPath id="typing"><rect class="typed" x="84" y="194" width="650" height="37"/></clipPath></defs>
 <style>
 @keyframes typing{0%{width:0}45%,80%{width:650px}100%{width:0}}
@@ -24,8 +24,8 @@
 <text x="48" y="221" font-family="Consolas,monospace" font-size="22" fill="#087f72">&gt;</text>
 <g clip-path="url(#typing)" font-family="Consolas,monospace" font-size="20" fill="#586b7a">
 <text x="84" y="220" class="phrase p1">building things I wish existed</text>
-<text x="84" y="220" class="phrase p2">one rabbit hole at a time</text>
-<text x="84" y="220" class="phrase p3">debugging software &amp; occasionally engines</text>
+<text x="84" y="220" class="phrase p2">exploring AI, one experiment at a time</text>
+<text x="84" y="220" class="phrase p3">learning to build smarter systems</text>
 </g>
 <text x="48" y="283" font-family="Consolas,monospace" font-size="13" fill="#586b7a">build <tspan fill="#7950b3">→</tspan> break <tspan fill="#7950b3">→</tspan> understand <tspan fill="#7950b3">→</tspan> repeat</text>
 <g transform="translate(850 78)">
