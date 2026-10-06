@@ -26,40 +26,14 @@ def api(path, token, payload=None):
     with urlopen(req, timeout=40) as response:
         return json.load(response)
 
-def list_repos(endpoint, token):
+def fetch(username, token):
     repos, page = [], 1
     while True:
-        batch = api(f'{endpoint}&per_page=100&page={page}', token)
-        repos.extend(batch)
+        batch = api(f'users/{username}/repos?type=owner&per_page=100&page={page}', token)
+        repos.extend(r for r in batch if not r['fork'] and not r['private'])
         if len(batch) < 100:
             break
         page += 1
-    return repos
-
-def fetch(username, token, include_private=False, activity_only=False, languages_only=False):
-    data = {'updated': datetime.now(timezone.utc).strftime('%Y-%m-%d')}
-    if include_private:
-        account = api('user', token)
-        if account['login'].lower() != username.lower():
-            raise RuntimeError('The private-repository token must belong to the profile owner.')
-        repos = list_repos('user/repos?affiliation=owner&visibility=all', token)
-        repos = [r for r in repos if not r['fork'] and r['owner']['login'].lower() == username.lower()]
-    else:
-        repos = list_repos(f'users/{username}/repos?type=owner', token)
-        repos = [r for r in repos if not r['fork'] and not r['private']]
-    if not activity_only:
-        languages = Counter()
-        with ThreadPoolExecutor(max_workers=4) as pool:
-            for counts in pool.map(lambda r: api(f'repos/{r["full_name"]}/languages', token), repos):
-                languages.update(counts)
-        data.update({
-            'languages': dict(languages.most_common()),
-            'language_scope': 'public + private' if include_private else 'public',
-            'language_repositories': len(repos),
-            'included_private_repositories': sum(r['private'] for r in repos),
-        })
-    if languages_only:
-        return data
     query = '''query($login:String!) { user(login:$login) { contributionsCollection {
       contributionCalendar { totalContributions weeks { contributionDays { date contributionCount } } }
     } } }'''
@@ -72,12 +46,17 @@ def fetch(username, token, include_private=False, activity_only=False, languages
     for day in days:
         streak = streak + 1 if day['contributionCount'] else 0
         longest = max(longest, streak)
-    data.update({
+    languages = Counter()
+    with ThreadPoolExecutor(max_workers=4) as pool:
+        for counts in pool.map(lambda r: api(f'repos/{r["full_name"]}/languages', token), repos):
+            languages.update(counts)
+    return {
+        'updated': datetime.now(timezone.utc).strftime('%Y-%m-%d'),
         'contributions': calendar['totalContributions'],
         'active_days': sum(d['contributionCount'] > 0 for d in days),
-        'longest_streak': longest, 'public_repos': sum(not r['private'] for r in repos),
-    })
-    return data
+        'longest_streak': longest, 'public_repos': len(repos),
+        'languages': dict(languages.most_common()),
+    }
 
 def svg_start(title, t):
     return f'''<svg xmlns="http://www.w3.org/2000/svg" width="560" height="248" viewBox="0 0 560 248" role="img" aria-labelledby="title">
@@ -101,11 +80,8 @@ def stats_svg(data, t):
     return s + '</g></svg>'
 
 def languages_svg(data, t):
-    all_repos = data['language_scope'] == 'public + private'
-    scope = 'public and private' if all_repos else 'public'
-    s = svg_start(f'Language mix by bytes in owned {scope} non-fork repositories', t)
-    heading = 'CODE MIX / PUBLIC + PRIVATE' if all_repos else 'CODE MIX / PUBLIC REPOS'
-    s += text(28, 36, heading, t, 12, True, 600)
+    s = svg_start('Language mix by bytes in public non-fork repositories', t)
+    s += text(28, 36, 'CODE MIX / PUBLIC REPOS', t, 12, True, 600)
     pairs = list(data['languages'].items())
     total = sum(v for _, v in pairs)
     if not total:
@@ -130,24 +106,18 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--username', default='khalifehbasiri')
     parser.add_argument('--local-gh', action='store_true', help='Use existing GitHub CLI login locally.')
-    parser.add_argument('--include-private', action='store_true', help='Include owned private repositories in language totals.')
-    mode = parser.add_mutually_exclusive_group()
-    mode.add_argument('--activity-only', action='store_true', help='Update activity cards and preserve the language cards.')
-    mode.add_argument('--languages-only', action='store_true', help='Update language cards and preserve the activity cards.')
     args = parser.parse_args()
     token = os.environ.get('GH_TOKEN') or os.environ.get('GITHUB_TOKEN')
     if args.local_gh:
         token = subprocess.check_output(['gh', 'auth', 'token'], text=True).strip()
     if not token:
         raise SystemExit('Set GH_TOKEN/GITHUB_TOKEN or use --local-gh. No token is saved to files.')
-    data = fetch(args.username, token, args.include_private, args.activity_only, args.languages_only)
+    data = fetch(args.username, token)
     assets = ROOT / 'assets'
     assets.mkdir(exist_ok=True)
     for theme, t in THEMES.items():
-        if not args.languages_only:
-            (assets / f'stats-{theme}.svg').write_text(stats_svg(data, t), encoding='utf-8')
-        if not args.activity_only:
-            (assets / f'languages-{theme}.svg').write_text(languages_svg(data, t), encoding='utf-8')
+        (assets / f'stats-{theme}.svg').write_text(stats_svg(data, t), encoding='utf-8')
+        (assets / f'languages-{theme}.svg').write_text(languages_svg(data, t), encoding='utf-8')
     print(json.dumps(data))
 
 if __name__ == '__main__':
