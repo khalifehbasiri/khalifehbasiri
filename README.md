@@ -12,9 +12,9 @@
 
 Most of my projects start with **“I wish there was a tool for this.”**
 
-This is where I try things, follow the rabbit holes, and turn a few of them into something useful—from full-stack apps to experiments with machine learning.
+This is where I try ideas, follow rabbit holes, and turn what I learn into useful software—from full-stack apps to AI experiments.
 
-I'm building toward **AI engineering**, with an interest in computer vision, retrieval, and making AI useful beyond a demo.
+I'm working toward becoming an **AI engineer**, focused on turning existing models into useful applications. Most of my experiments involve LLMs, and I'm also exploring machine learning.
 
 ## The commit trail
 
@@ -41,7 +41,7 @@ I'm building toward **AI engineering**, with an interest in computer vision, ret
 
 ## A few tabs I always have open
 
-`something I'm building` &nbsp; `something I'm debugging` &nbsp; `an AI experiment`
+`an AI experiment` &nbsp; `something I'm debugging` &nbsp; `something I'm building`
 
 Right now, the workbench has [ZDash](https://www.zdash.app/) on it. The other experiments live in the repos below.
 
