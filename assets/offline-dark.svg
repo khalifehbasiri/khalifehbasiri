@@ -1,16 +1,22 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1000" height="180" viewBox="0 0 1000 180" role="img" aria-labelledby="title desc">
 <title id="title">Off the clock</title>
-<desc id="desc">A sports coupe drives from left to right with spinning wheels. On the next pass, a weight plate rolls across the same lane. The sequence repeats.</desc>
+<desc id="desc">A sports coupe drives left to right, followed by a rolling weight plate, then a healthy meal and water bottle with a pulsing heart. The three scenes repeat.</desc>
 <defs><clipPath id="lane"><rect x="1" y="48" width="998" height="110"/></clipPath></defs>
 <style>
-@keyframes drive{0%{transform:translateX(-240px);opacity:0}2%{opacity:1}45%{transform:translateX(1050px);opacity:1}48%,100%{transform:translateX(1050px);opacity:0}}
-@keyframes roll{0%,49.99%{transform:translateX(-90px);opacity:0}50%{transform:translateX(-90px);opacity:0}52%{opacity:1}95%{transform:translateX(1050px);opacity:1}98%,100%{transform:translateX(1050px);opacity:0}}
+@keyframes drive{0%{transform:translateX(-240px);opacity:0}2%{opacity:1}30%{transform:translateX(1050px);opacity:1}32%,100%{transform:translateX(1050px);opacity:0}}
+@keyframes roll{0%,33.32%{transform:translateX(-90px);opacity:0}33.333%{transform:translateX(-90px);opacity:0}35%{opacity:1}63.333%{transform:translateX(1050px);opacity:1}65%,100%{transform:translateX(1050px);opacity:0}}
+@keyframes nourish{0%,66.65%{transform:translateX(-180px);opacity:0}66.667%{transform:translateX(-180px);opacity:0}68%{opacity:1}96.667%{transform:translateX(1050px);opacity:1}98%,100%{transform:translateX(1050px);opacity:0}}
 @keyframes spin{to{transform:rotate(360deg)}}
-.car{animation:drive 20s linear infinite;transform:translateX(-240px);opacity:0}
-.plate{animation:roll 20s linear infinite;transform:translateX(-90px);opacity:0}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+@keyframes pulse{0%,100%{transform:scale(1)}35%{transform:scale(1.15)}}
+.car{animation:drive 30s linear infinite;transform:translateX(-240px);opacity:0}
+.plate{animation:roll 30s linear infinite;transform:translateX(-90px);opacity:0}
+.nutrition{animation:nourish 30s linear infinite;transform:translateX(-180px);opacity:0}
+.meal-bob{animation:bob 2.5s ease-in-out infinite}
+.heart{animation:pulse 1.2s ease-in-out infinite;transform-origin:0 0}
 .wheel{animation:spin .65s linear infinite;transform-origin:0 0}
 .plate-spin{animation:spin 1.4s linear infinite;transform-origin:0 0}
-@media(prefers-reduced-motion:reduce){.car{animation:none;transform:translateX(320px);opacity:1}.plate{animation:none;transform:translateX(620px);opacity:1}.wheel,.plate-spin{animation:none}}
+@media(prefers-reduced-motion:reduce){.car{animation:none;transform:translateX(180px);opacity:1}.plate{animation:none;transform:translateX(480px);opacity:1}.nutrition{animation:none;transform:translateX(650px);opacity:1}.wheel,.plate-spin,.meal-bob,.heart{animation:none}}
 </style>
 <rect x="1" y="1" width="998" height="178" rx="14" fill="#0d1117" stroke="#273441"/>
 <text x="24" y="31" fill="#8e9cab" font-family="Consolas,monospace" font-size="12" letter-spacing="2">OFF THE CLOCK</text>
@@ -47,6 +53,22 @@
           <text x="-18" y="3">45</text><text x="18" y="3">LB</text>
         </g>
       </g>
+    </g>
+  </g>
+  <g class="nutrition">
+    <ellipse cx="83" cy="139" rx="81" ry="4" fill="#273441" opacity=".45"/>
+    <g class="meal-bob">
+      <path d="M15 98 Q8 83 24 80 Q22 63 40 72 Q50 60 63 73 Q80 60 82 80 Q96 73 103 91 L97 104Z" fill="#64dfca"/>
+      <path d="M25 88 Q40 76 53 90 M56 79 Q67 86 70 98 M77 89 Q89 84 94 96" fill="none" stroke="#0d1117" stroke-opacity=".4" stroke-width="2"/>
+      <circle cx="41" cy="92" r="9" fill="#f28eae"/><circle cx="76" cy="88" r="8" fill="#f0be76"/>
+      <path d="M8 101 H108 Q102 124 91 131 H25 Q14 122 8 101Z" fill="#1b3341" stroke="#e6edf3" stroke-width="2"/>
+      <path d="M8 101 H108" stroke="#e6edf3" stroke-width="4" stroke-linecap="round"/>
+      <path d="M32 131 H84" stroke="#e6edf3" stroke-width="3" stroke-linecap="round"/>
+      <rect x="125" y="76" width="30" height="55" rx="9" fill="#1b3341" stroke="#64dfca" stroke-width="2"/>
+      <path d="M126 106 Q133 100 140 105 Q148 110 154 104 V122 Q154 130 147 130 H133 Q126 130 126 122Z" fill="#64dfca" opacity=".6"/>
+      <rect x="132" y="65" width="16" height="12" rx="3" fill="#c69bff"/>
+      <path d="M132 89 H146 M132 96 H146" stroke="#e6edf3" stroke-opacity=".4" stroke-width="1.5"/>
+      <g transform="translate(110 71)"><g class="heart"><path d="M0 5 C-19-5 -15-19 -6-17 Q0-16 0-11 Q0-16 6-17 C15-19 19-5 0 5Z" fill="#f28eae"/></g></g>
     </g>
   </g>
 </g>

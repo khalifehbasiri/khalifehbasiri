@@ -14,7 +14,7 @@ Most of my projects start with **“I wish there was a tool for this.”**
 
 This is where I try ideas, follow rabbit holes, and turn what I learn into useful software—from full-stack apps to AI experiments.
 
-I'm working toward becoming an **AI engineer**, focused on turning existing models into useful applications. Most of my experiments involve LLMs, and I'm also exploring machine learning.
+I'm working toward becoming an **AI engineer** by turning existing models into useful applications, experimenting with LLMs, and learning through hands-on machine learning projects.
 
 ## The commit trail
 
@@ -43,12 +43,21 @@ I'm working toward becoming an **AI engineer**, focused on turning existing mode
 
 `an AI experiment` &nbsp; `something I'm debugging` &nbsp; `something I'm building`
 
-Right now, the workbench has [ZDash](https://www.zdash.app/) on it. The other experiments live in the repos below.
+<p>
+  <a href="https://www.zdash.app/">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="assets/zdash-logo-dark.svg">
+      <source media="(prefers-color-scheme: light)" srcset="assets/zdash-logo-light.svg">
+      <img alt="ZDash — visit the product website" src="assets/zdash-logo-dark.svg" width="144">
+    </picture>
+  </a>
+  &nbsp; <sub>Currently on the workbench. More experiments in the repos below.</sub>
+</p>
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="assets/offline-dark.svg">
   <source media="(prefers-color-scheme: light)" srcset="assets/offline-light.svg">
-  <img alt="Off the clock: a car drives across the screen, followed by a rolling weight plate." src="assets/offline-dark.svg" width="100%">
+  <img alt="Off the clock: a driving car, a rolling weight plate, and a healthy meal with water take turns crossing the screen." src="assets/offline-dark.svg" width="100%">
 </picture>
 
 ---
