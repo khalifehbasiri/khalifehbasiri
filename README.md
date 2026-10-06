@@ -41,16 +41,7 @@ This is where I try ideas, follow rabbit holes, and turn what I learn into usefu
 
 `an AI experiment` &nbsp; `something I'm debugging` &nbsp; `something I'm building`
 
-<p>
-  <a href="https://www.zdash.app/">
-    <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="assets/zdash-logo-dark.svg">
-      <source media="(prefers-color-scheme: light)" srcset="assets/zdash-logo-light.svg">
-      <img alt="ZDash: visit the product website" src="assets/zdash-logo-dark.svg" width="144">
-    </picture>
-  </a>
-  &nbsp; <sub>Currently on the workbench. More experiments in the repos below.</sub>
-</p>
+Right now, the workbench has [ZDash](https://www.zdash.app/) on it. The other experiments live in the repos below.
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="assets/offline-dark.svg">
