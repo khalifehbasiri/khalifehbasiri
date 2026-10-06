@@ -8,7 +8,6 @@ import json
 import os
 from pathlib import Path
 import subprocess
-from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -27,7 +26,29 @@ def api(path, token, payload=None):
     with urlopen(req, timeout=40) as response:
         return json.load(response)
 
+def contribution_query(username, token, query):
+    result = api('graphql', token, {'query': query, 'variables': {'login': username}})
+    if result.get('errors'):
+        raise RuntimeError('GitHub contribution query failed: ' + result['errors'][0]['message'])
+    return result['data']['user']
+
+def yearly_contributions(username, token, years, now):
+    # Disjoint calendar years avoid double-counting overlapping rolling-year totals.
+    years = sorted(set(year for year in years if year <= now.year))
+    if not years:
+        return {}
+    fields = []
+    for year in years:
+        start = f'{year}-01-01T00:00:00Z'
+        end = min(datetime(year, 12, 31, 23, 59, 59, tzinfo=timezone.utc), now)
+        fields.append(f'''y{year}: contributionsCollection(from: "{start}",
+          to: "{end.strftime('%Y-%m-%dT%H:%M:%SZ')}") {{ contributionCalendar {{ totalContributions }} }}''')
+    query = 'query($login:String!) { user(login:$login) { ' + ' '.join(fields) + ' } }'
+    user = contribution_query(username, token, query)
+    return {str(year): user[f'y{year}']['contributionCalendar']['totalContributions'] for year in years}
+
 def fetch(username, token):
+    now = datetime.now(timezone.utc)
     repos, page = [], 1
     while True:
         batch = api(f'users/{username}/repos?type=owner&per_page=100&page={page}', token)
@@ -36,32 +57,26 @@ def fetch(username, token):
             break
         page += 1
     query = '''query($login:String!) { user(login:$login) { contributionsCollection {
+      contributionYears
       contributionCalendar { totalContributions weeks { contributionDays { date contributionCount } } }
     } } }'''
-    result = api('graphql', token, {'query': query, 'variables': {'login': username}})
-    if result.get('errors'):
-        raise RuntimeError('GitHub contribution query failed: ' + result['errors'][0]['message'])
-    calendar = result['data']['user']['contributionsCollection']['contributionCalendar']
+    collection = contribution_query(username, token, query)['contributionsCollection']
+    calendar = collection['contributionCalendar']
     days = sorted((d for w in calendar['weeks'] for d in w['contributionDays']), key=lambda d: d['date'])
     streak = longest = 0
     for day in days:
         streak = streak + 1 if day['contributionCount'] else 0
         longest = max(longest, streak)
-    # Public scope keeps local and repository-scoped workflow credentials consistent.
-    # Commit search covers indexed default-branch commits without a date restriction.
-    commits = api('search/commits?' + urlencode({
-        'q': f'author:{username} is:public', 'per_page': 1,
-    }), token)
-    if commits['incomplete_results']:
-        raise RuntimeError('GitHub commit search was incomplete; keeping the previous cards.')
+    yearly_totals = yearly_contributions(username, token, collection['contributionYears'], now)
     languages = Counter()
     with ThreadPoolExecutor(max_workers=4) as pool:
         for counts in pool.map(lambda r: api(f'repos/{r["full_name"]}/languages', token), repos):
             languages.update(counts)
     return {
-        'updated': datetime.now(timezone.utc).strftime('%Y-%m-%d'),
+        'updated': now.strftime('%Y-%m-%d'),
         'contributions': calendar['totalContributions'],
-        'lifetime_commits': commits['total_count'],
+        'lifetime_contributions': sum(yearly_totals.values()),
+        'contributions_by_year': yearly_totals,
         'longest_streak': longest, 'public_repos': len(repos),
         'languages': dict(languages.most_common()),
     }
@@ -76,9 +91,9 @@ def text(x, y, content, t, size=14, muted=False, weight=400):
     return f'<text x="{x}" y="{y}" font-size="{size}" font-weight="{weight}" fill="{t["muted" if muted else "ink"]}">{escape(str(content))}</text>'
 
 def stats_svg(data, t):
-    s = svg_start('GitHub activity: yearly contributions and streak, lifetime public commits, and public repositories', t)
+    s = svg_start('GitHub activity: yearly contributions and streak, lifetime contributions, and public repositories', t)
     s += text(28, 36, 'GITHUB / ACTIVITY', t, 12, True, 600)
-    metrics = [(28, 96, data['contributions'], 'contributions · last year'), (302, 96, data['lifetime_commits'], 'lifetime commits · public'),
+    metrics = [(28, 96, data['contributions'], 'contributions · last year'), (302, 96, data['lifetime_contributions'], 'lifetime contributions'),
                (28, 179, data['longest_streak'], 'longest streak · days'), (302, 179, data['public_repos'], 'public repos · non-forks')]
     for x, y, value, label in metrics:
         s += text(x, y, f'{value:,}', t, 38, weight=700)
