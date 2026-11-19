@@ -2,11 +2,13 @@
 import argparse
 from collections import Counter
 from concurrent.futures import ThreadPoolExecutor
-from datetime import datetime, timezone
+from datetime import date, datetime, timezone
 from html import escape
+from html.parser import HTMLParser
 import json
 import os
 from pathlib import Path
+import re
 import subprocess
 from urllib.request import Request, urlopen
 
@@ -16,6 +18,50 @@ THEMES = {
     'light': {'bg': '#ffffff', 'ink': '#172b3a', 'muted': '#586b7a', 'line': '#d2dce3', 'accent': '#087f72'},
 }
 COLORS = ['#64dfca', '#6d9eff', '#c69bff', '#f0be76', '#f28eae', '#91acbc']
+
+class ProfileCalendar(HTMLParser):
+    def __init__(self):
+        super().__init__()
+        self.dates, self.counts = {}, {}
+        self.tooltip, self.label = None, ''
+
+    def handle_starttag(self, tag, attrs):
+        attrs = dict(attrs)
+        if tag == 'td' and 'data-date' in attrs:
+            self.dates[attrs['id']] = attrs['data-date']
+        elif tag == 'tool-tip':
+            self.tooltip, self.label = attrs.get('for'), ''
+
+    def handle_data(self, data):
+        if self.tooltip is not None:
+            self.label += data
+
+    def handle_endtag(self, tag):
+        if tag == 'tool-tip':
+            match = re.fullmatch(r'\s*(No|[\d,]+) contributions? on .+\s*', self.label)
+            if self.tooltip is not None and match:
+                self.counts[self.tooltip] = 0 if match[1] == 'No' else int(match[1].replace(',', ''))
+            self.tooltip = None
+
+    def days(self):
+        if not self.dates or self.dates.keys() - self.counts.keys():
+            raise ValueError('GitHub profile calendar is missing contribution counts')
+        days = sorted(({'date': day, 'contributionCount': self.counts[key]}
+                       for key, day in self.dates.items()), key=lambda d: d['date'])
+        dates = [date.fromisoformat(d['date']) for d in days]
+        if len(set(dates)) != len(dates) or (dates[-1] - dates[0]).days + 1 != len(dates):
+            raise ValueError('GitHub profile calendar has duplicate or missing dates')
+        return days
+
+def profile_calendar(username):
+    # The rendered profile can include contributions absent from GraphQL's calendar.
+    req = Request(f'https://github.com/users/{username}/contributions',
+                  headers={'User-Agent': 'khalifehbasiri-profile', 'Accept-Language': 'en-US'})
+    with urlopen(req, timeout=40) as response:
+        parser = ProfileCalendar()
+        parser.feed(response.read().decode('utf-8'))
+    days = parser.days()
+    return {'totalContributions': sum(d['contributionCount'] for d in days), 'days': days}
 
 def api(path, token, payload=None):
     headers = {'User-Agent': 'khalifehbasiri-profile', 'Accept': 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28'}
@@ -58,11 +104,10 @@ def fetch(username, token):
         page += 1
     query = '''query($login:String!) { user(login:$login) { contributionsCollection {
       contributionYears
-      contributionCalendar { totalContributions weeks { contributionDays { date contributionCount } } }
     } } }'''
     collection = contribution_query(username, token, query)['contributionsCollection']
-    calendar = collection['contributionCalendar']
-    days = sorted((d for w in calendar['weeks'] for d in w['contributionDays']), key=lambda d: d['date'])
+    calendar = profile_calendar(username)
+    days = calendar['days']
     streak = longest = 0
     for day in days:
         streak = streak + 1 if day['contributionCount'] else 0

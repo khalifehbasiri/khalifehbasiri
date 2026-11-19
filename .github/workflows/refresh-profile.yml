@@ -7,6 +7,7 @@ on:
   push:
     paths:
       - scripts/update_stats.py
+      - scripts/test_update_stats.py
       - .github/workflows/refresh-profile.yml
 
 permissions:
@@ -23,6 +24,8 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v6
+      - name: Check calendar parsing
+        run: python3 -m unittest discover -s scripts -p 'test_*.py'
       - name: Generate activity and language cards
         env:
           GH_TOKEN: ${{ github.token }}
